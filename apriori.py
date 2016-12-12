@@ -118,10 +118,8 @@ def apriori(transactions, min_supp=3, confidence=0.75):
         if occurence >= min_supp:
             occurence_dict_current.append((item,occurence))
     occurence_dict.append(occurence_dict_current)
-    print(occurence_dict)
     # We add the associations converded
     labels.append(set(getLabels(occurence_dict[-1])))
-    print(labels)
     n = 2
     # if the last item of occurence_dict is empty we've finished the algorithme
     while occurence_dict[-1] != []:
@@ -132,20 +130,19 @@ def apriori(transactions, min_supp=3, confidence=0.75):
         for i in itertools.product(labels[0], labels[n-2]):
             if strToSet(i[0]).intersection(strToSet(i[1])) == set() and not(strToSet(i[0]).union(strToSet(i[1])) in cart):
                 cart.append(strToSet(i[0]).union(strToSet(i[1])))
-        print(cart)
         # finding the occurence of association of n elements
         occurence_dict_current = []
         for item in cart:
             occurence = getOccurence(list(item), transactions)
             if occurence >= min_supp:
                 occurence_dict_current.append((set_to_str(item),occurence))
+
         occurence_dict.append(occurence_dict_current)
         labels.append(set(getLabels(occurence_dict[-1])))
         n += 1
 
     # Once we have all the associations and their occurences we formate the
     # rules
-    print(occurence_dict)
     rules = setRules(occurence_dict[:-1], confidence)
 
     return rules

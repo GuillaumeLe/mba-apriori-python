@@ -31,6 +31,7 @@ class AprioriTest(unittest.TestCase):
         ]
         self.assertEqual(getOccurence('A',transactions),3)
         self.assertEqual(getOccurence('H',transactions),1)
+        self.assertEqual(getOccurence(set(['A','B']), transactions),3)
 
     def test_strToSet(self):
         self. assertEqual(strToSet("ABC"), set(['A','B','C']))
