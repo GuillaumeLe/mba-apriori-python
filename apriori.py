@@ -18,9 +18,8 @@ def getOccurence(item, transactions):
     """
     occurence = 0
     for transaction in transactions:
-        for elt in transaction:
-            if elt == item:
-                occurence += 1
+        if set(item) <= set(transaction):
+            occurence +=1
     return occurence
 
 def strToSet(string):
@@ -135,7 +134,7 @@ def apriori(transactions, min_supp=3, confidence=0.75):
         for item in cart:
             occurence = getOccurence(list(item), transactions)
             if occurence >= min_supp:
-                occurence_dict_current.append((set_to_str(item),occurence))
+                occurence_dict_current.append((setToStr(item),occurence))
 
         occurence_dict.append(occurence_dict_current)
         labels.append(set(getLabels(occurence_dict[-1])))
@@ -144,5 +143,4 @@ def apriori(transactions, min_supp=3, confidence=0.75):
     # Once we have all the associations and their occurences we formate the
     # rules
     rules = setRules(occurence_dict[:-1], confidence)
-
     return rules

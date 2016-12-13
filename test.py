@@ -90,11 +90,20 @@ class AprioriTest(unittest.TestCase):
             ['A','B','D','E'],
             ['C','A','D','B','F'],
             ['D','A','H','B','C'],
-            ['E','F','B','C','E']
+            ['E','F','B','C']
         ]
+        rules = apriori(transactions)
         self.assertIn(
-            (set(['A']), set(['B']), 0.75),
-            apriori(transactions)
+            (set(['A']), set(['B']), 1),
+            rules
+        )
+        self.assertIn(
+            (set(['B']),set(['A','D']), 0.75),
+            rules
+        )
+        self.assertIn(
+            (set(['B']), set(['E']), 0.5),
+            apriori(transactions, min_supp=2, confidence=0.5)
         )
 
 if __name__ == "__main__":
